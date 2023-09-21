@@ -6,22 +6,24 @@ import Navigation from './components/Navigation/Navigation';
 import Home from './components/Home/Home';
 import NoMatch from './components/NoMatch/NoMatch';
 import Footer from './components/Footer/Footer';
+import Products from './components/Products/Products';
 
 
 function App() {
   return (
-    <div>
+    <>
       <Navigation />
-      <BrowserRouter>
+      <div className='vh-100'>
         <Routes>
-          <Route path="/" element={<Home />}>
-            <Route index element={<Home />} />
-            <Route path="/*" element={<NoMatch />} />
-          </Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/*" element={<NoMatch />} />
         </Routes>
-      </BrowserRouter>
+
+      </div>
+
       <Footer />
-    </div>
+    </>
   );
 }
 

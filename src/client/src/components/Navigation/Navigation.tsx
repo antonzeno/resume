@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,8 +10,10 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import { useNavigate } from 'react-router-dom';
 
 const logo = require('../../assets/logo.webp');
+const rocket = require('../../assets/rocket.png');
 
 const pages = ['Products', 'Pricing', 'Blog'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -19,6 +21,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 function Navigation() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const nav = useNavigate();
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -34,6 +37,10 @@ function Navigation() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    function navigate(route: string) {
+        nav(`/${route.toLowerCase()}`);
+    }
 
     return (
         <AppBar position="static" elevation={0} sx={{ backgroundColor: 'white' }}>
@@ -56,6 +63,7 @@ function Navigation() {
                         }}
                     >
                         <img alt="Logo" src={logo} height={50} />
+                        <img alt="rocket" src={rocket} height={50} />
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -112,12 +120,14 @@ function Navigation() {
                         }}
                     >
                         <img alt="Logo" src={logo} height={50} />
+                        <img alt="rocket" src={rocket} height={50} />
+
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => navigate(page)}
                                 sx={{ my: 2, color: 'black', display: 'block' }}
                             >
                                 {page}

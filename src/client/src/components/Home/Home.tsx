@@ -4,43 +4,6 @@ import Button, { ButtonProps } from '@mui/material/Button';
 import { purple, blue } from '@mui/material/colors';
 const showcase = require('../../assets/showcase.gif');
 
-const BootstrapButton = styled(Button)({
-    boxShadow: 'none',
-    textTransform: 'none',
-    fontSize: 18,
-    padding: '6px 12px',
-    border: '1px solid',
-    lineHeight: 1.5,
-    backgroundColor: '#0063cc',
-    borderColor: '#0063cc',
-    fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Segoe UI"',
-        'Roboto',
-        '"Helvetica Neue"',
-        'Arial',
-        'sans-serif',
-        '"Apple Color Emoji"',
-        '"Segoe UI Emoji"',
-        '"Segoe UI Symbol"',
-    ].join(','),
-    '&:hover': {
-        backgroundColor: '#0069d9',
-        borderColor: '#0062cc',
-        boxShadow: 'none',
-    },
-    '&:active': {
-        boxShadow: 'none',
-        backgroundColor: '#0062cc',
-        borderColor: '#005cbf',
-    },
-    '&:focus': {
-        boxShadow: '0 0 0 0.2rem rgba(0,123,255,.5)',
-    },
-});
-
-
 const Home = () => {
 
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
@@ -56,7 +19,7 @@ const Home = () => {
 
     return (
         <>
-            <div className="app-header d-flex align-items-center justify-content-center  text-center">
+            <div className="app-header center-container text-center">
                 <div className="container">
                     <div className="small fw-bold">Online Resume creator.</div>
                     <h1 className='fw-bold'>RÉSUMÉ</h1>
