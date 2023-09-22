@@ -26,7 +26,7 @@ const Home = () => {
                 <div className="container">
                     <div className="small fw-bold">DocBuilder Hub</div>
                     <h1 className='fw-bold'>Create Your RÉSUMÉ and More</h1>
-                    <p>Crafting professional documents has never been easier. Whether it's resumes, certificates, cover letters, or invoices, our Document Builder is designed to meet your needs. Let us handle the details while you focus on your expertise.</p>
+                    <p>Crafting professional documents has never been easier. <br /> Whether it's resumes, certificates, cover letters, or invoices, our Document Builder is designed to meet your needs. Let us handle the details while you focus on your expertise.</p>
                     <ColorButton variant="contained" onClick={() => navigate('/products')}>Get Started</ColorButton>
                     <p>It's free to try.</p>
                 </div>

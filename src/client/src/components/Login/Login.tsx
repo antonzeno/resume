@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios';
 
 const Register = () => {
     const navigate = useNavigate();

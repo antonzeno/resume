@@ -135,7 +135,14 @@ function Navigation() {
                         ))}
                     </Box>
 
-                    <Box></Box>
+                    <Box>
+                        <Button variant="outlined" color="primary" onClick={() => navigate('login')}>
+                            Login
+                        </Button>
+                        <Button variant="contained" color="primary" sx={{ mx: 1 }} onClick={() => navigate('register')}>
+                            Register
+                        </Button>
+                    </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Profile">
