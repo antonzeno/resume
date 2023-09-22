@@ -1,12 +1,43 @@
 import express from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import User from '../models/user.model';
 
 class UserController {
-    static async getAll(req: express.Request, res: express.Response) {
-        const users = await User.findAll();
-        res.json(users);
+    static async login(req: express.Request, res: express.Response) {
+        try {
+            const { email, password } = req.body;
+
+            if (!email || !password) {
+                return res.sendStatus(400);
+            }
+
+            const user = await User.findOne({ where: { email } });
+
+            if (!user) {
+                return res.sendStatus(400);
+            }
+
+            const match = await bcrypt.compare(password, user.password);
+
+            if (!match) {
+                return res.sendStatus(403);
+            }
+
+            const token = jwt.sign({
+                userId: user.id,
+                username: user.username,
+                email: user.email
+            }, 'secretKey', { expiresIn: '1h' });
+
+            return res.status(200).json({ token, user });
+
+        } catch (error) {
+            console.log(error);
+            return res.sendStatus(400);
+        }
     }
+
 
     static async register(req: express.Request, res: express.Response) {
         console.log(req.body);

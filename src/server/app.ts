@@ -7,12 +7,11 @@ import cookieParser from 'cookie-parser';
 import router from './routes';
 import sequelize from './database'
 import { syncAllModels } from './helpers';
-
 const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
     cors({
         origin: 'http://localhost:3000',
