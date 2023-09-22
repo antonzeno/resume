@@ -7,21 +7,24 @@ import Home from './components/Home/Home';
 import NoMatch from './components/NoMatch/NoMatch';
 import Footer from './components/Footer/Footer';
 import Products from './components/Products/Products';
+import Register from './components/Register/Register';
+import Login from './components/Login/Login';
 
 
 function App() {
   return (
     <>
       <Navigation />
-      <div className='vh-100'>
+      <div className='app'>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/*" element={<NoMatch />} />
         </Routes>
 
       </div>
-
       <Footer />
     </>
   );

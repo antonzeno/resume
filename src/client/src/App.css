@@ -4,12 +4,15 @@ body {
   overflow-x: hidden;
 }
 
+.app {
+  min-height: calc(100vh - 130px);
+}
+
 .center-container {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  min-height: 100vh;
 }
 
 .app-header {

@@ -2,9 +2,12 @@ import React from 'react';
 import { styled } from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
 import { purple, blue } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
+
 const showcase = require('../../assets/showcase.gif');
 
 const Home = () => {
+    const navigate = useNavigate();
 
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
         color: theme.palette.getContrastText(purple[500]),
@@ -13,7 +16,7 @@ const Home = () => {
         paddingLeft: 25,
         backgroundColor: blue[500],
         '&:hover': {
-            backgroundColor: purple[700],
+            backgroundColor: blue[700],
         },
     }));
 
@@ -21,14 +24,14 @@ const Home = () => {
         <>
             <div className="app-header center-container text-center">
                 <div className="container">
-                    <div className="small fw-bold">Online Resume creator.</div>
-                    <h1 className='fw-bold'>RÉSUMÉ</h1>
-                    <p>Crafting the perfect resume isn't everyone's cup of tea. <br />That's perfectly fine. Introducing our Resume Writer, designed just for you. Let us do the heavy lifting while you focus on what you do best.</p>
-                    <ColorButton variant="contained">Create your RÉSUMÉ</ColorButton>
-                    <p>Its free to try.</p>
-
+                    <div className="small fw-bold">DocBuilder Hub</div>
+                    <h1 className='fw-bold'>Create Your RÉSUMÉ and More</h1>
+                    <p>Crafting professional documents has never been easier. Whether it's resumes, certificates, cover letters, or invoices, our Document Builder is designed to meet your needs. Let us handle the details while you focus on your expertise.</p>
+                    <ColorButton variant="contained" onClick={() => navigate('/products')}>Get Started</ColorButton>
+                    <p>It's free to try.</p>
                 </div>
             </div>
+
             <img
                 src={showcase}
                 alt="Showcase"

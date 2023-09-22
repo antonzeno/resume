@@ -10,14 +10,13 @@ const Products = () => {
                 <div className="container">
                     <div className="small fw-bold">Explore Our Products</div>
                     <h1 className='fw-bold'>Elevate Your Document Creation</h1>
-                    <p>Crafting professional documents can be a daunting task. We understand. That's why we've developed a suite of specialized tools to streamline the process. Welcome to our Document Builder library.</p>
+                    <p>Crafting professional documents can be a daunting task. We understand. That's why we've developed a suite of specialized tools to streamline the process.</p>
                     <p>Ready to get started? It's free to try.</p>
 
                 </div>
             </div>
 
-            <div className='container mt-5'>
-
+            <div className='container pb-5'>
                 <div className="row">
                     {
                         products.map(product =>
