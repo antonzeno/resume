@@ -20,7 +20,7 @@ export const SnackbarContext = createContext<SnackbarContextProps>({
 export const SnackbarProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
     const [message, setMessage] = useState('');
-    const [severity, setSeverity] = useState('');
+    const [severity, setSeverity] = useState('success');
 
     const showSnackbar = (msg: string, severity: string) => {
         setMessage(msg);

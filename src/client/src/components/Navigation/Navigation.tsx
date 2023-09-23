@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,17 +11,17 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../contexts/UserContext';
 
 const logo = require('../../assets/logo.webp');
 const rocket = require('../../assets/rocket.png');
 
-const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
-
 function Navigation() {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const { isAuthenticated, logout, username } = useContext(UserContext);
     const nav = useNavigate();
+    const pages = ['Products', 'Pricing', 'Blog'];
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -41,6 +41,7 @@ function Navigation() {
     function navigate(route: string) {
         nav(`/${route.toLowerCase()}`);
     }
+
 
     return (
         <AppBar position="static" elevation={0} sx={{ backgroundColor: 'white' }}>
@@ -135,19 +136,10 @@ function Navigation() {
                         ))}
                     </Box>
 
-                    <Box>
-                        <Button variant="outlined" color="primary" onClick={() => navigate('login')}>
-                            Login
-                        </Button>
-                        <Button variant="contained" color="primary" sx={{ mx: 1 }} onClick={() => navigate('register')}>
-                            Register
-                        </Button>
-                    </Box>
-
-                    <Box sx={{ flexGrow: 0 }}>
+                    {isAuthenticated ? <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Profile">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt={username} src="/static/images/avatar/2.jpg" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -166,13 +158,21 @@ function Navigation() {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign="center">{setting}</Typography>
-                                </MenuItem>
-                            ))}
+                            <MenuItem key={'logout'} onClick={logout}>
+                                <Typography textAlign="center">Logout</Typography>
+                            </MenuItem>
                         </Menu>
-                    </Box>
+                    </Box> :
+                        <Box>
+                            <Button variant="outlined" color="primary" onClick={() => navigate('login')}>
+                                Login
+                            </Button>
+                            <Button variant="contained" color="primary" sx={{ mx: 1 }} onClick={() => navigate('register')}>
+                                Register
+                            </Button>
+                        </Box>
+                    }
+
                 </Toolbar>
             </Container>
         </AppBar>

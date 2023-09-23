@@ -18,13 +18,9 @@ const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [password2, setPassword2] = useState('');
-    const [success, setSuccess] = useState(false);
-    const [errMsg, setErrMsg] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const successRef = useRef(success);
-    const errMsgRef = useRef(errMsg);
     const navigate = useNavigate();
-    const { message, severity, isSnackbarOpen, showSnackbar, hideSnackbar } = useContext(SnackbarContext);
+    const { showSnackbar } = useContext(SnackbarContext);
 
     useEffect(() => {
         const USERNAME_REGEX = /^[A-Za-z0-9_]{6,}$/;
@@ -42,26 +38,6 @@ const Register = () => {
         setValidPassword2(!isEmpty(password) && !isEmpty(password2) && password === password2);
 
     }, [password, password2]);
-
-    useEffect(() => {
-        // Update the ref values to match the current state values
-        successRef.current = success;
-        errMsgRef.current = errMsg;
-
-        // Handle scenario: success changes to true
-        if (successRef.current) {
-            setErrMsg('');
-        }
-
-        // Cleanup function
-        return () => {
-            // Handle scenario: errMsg changes from empty to something else
-            if (errMsgRef.current !== '' && errMsg !== '' && successRef.current) {
-                setSuccess(false);
-            }
-        };
-    }, [errMsg, success]);
-
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -92,8 +68,6 @@ const Register = () => {
                 setEmail("");
                 setPassword("");
                 setPassword2("");
-                setErrMsg('');
-                setSuccess(true);
                 navigate('/login', { state: { registrationSuccess: true } });
             }
 
@@ -105,7 +79,6 @@ const Register = () => {
             } else {
                 showSnackbar("Registration Failed", "warning");
             }
-            setSuccess(false);
         } finally {
             setIsSubmitting(false);
         }
@@ -113,8 +86,6 @@ const Register = () => {
 
     return (
         <form id="authForm" className='shadow mb-3' onSubmit={handleSubmit}>
-            {success && <div className='text-success text-center mt-3 fw-bold'>Registration successful.</div>}
-            {!isEmpty(errMsg) && <div className='text-danger text-center mt-3 fw-bold'>{errMsg}</div>}
             <h2 id="headerTitle">Register</h2>
             <div>
                 <div className="row">

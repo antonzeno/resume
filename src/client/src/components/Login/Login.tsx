@@ -1,15 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { FormEvent, useContext, useEffect, useState } from 'react';
 import { Alert, AlertColor, Button, Snackbar } from '@mui/material';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { SnackbarContext } from '../../contexts/SnackbarContext';
+import axios from 'axios';
+import { UserContext } from '../../contexts/UserContext';
 
 const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
     const location = useLocation();
     const registrationSuccess = location.state?.registrationSuccess;
-    const { message, severity, isSnackbarOpen, showSnackbar, hideSnackbar } = useContext(SnackbarContext);
+    const { showSnackbar } = useContext(SnackbarContext);
+    const { login } = useContext(UserContext);
 
     useEffect(() => {
         if (registrationSuccess) {
@@ -17,8 +22,34 @@ const Login = () => {
         }
     }, [registrationSuccess]);
 
-    const handleSubmit = () => {
-        console.log('submitted');
+    const handleSubmit = async (e: FormEvent) => {
+        e.preventDefault();
+
+        try {
+            setIsSubmitting(true);
+            const response = await axios.post('http://localhost:8000/api/login', {
+                email,
+                password,
+            });
+
+            if (response.status == 200) {
+                const expiryDuration = 60 * 60 * 1000;
+                const expiryDate = new Date(Date.now() + expiryDuration);
+                const formattedExpiryDate = expiryDate.toUTCString();
+                document.cookie = `token=${response.data.token}; path=/; expires=${formattedExpiryDate}; Secure; SameSite=None`;
+                login();
+                navigate('/');
+            }
+
+        } catch (err: any) {
+            if (!err.response) {
+                showSnackbar("No Server Response", "warning");
+            } else if (err.response?.status === 400) {
+                showSnackbar("Login Failed", "warning");
+            }
+        } finally {
+            setIsSubmitting(false);
+        }
     }
 
     return (

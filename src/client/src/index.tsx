@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css';
 import App from './App';
 import { SnackbarProvider } from './contexts/SnackbarContext';
+import { UserProvider } from './contexts/UserContext';
 
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement || document.createElement('div'));
@@ -11,7 +12,9 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <SnackbarProvider>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </SnackbarProvider>
     </BrowserRouter>
   </React.StrictMode>
