@@ -8,10 +8,6 @@ import './Register.css';
 import { isEmpty } from 'lodash';
 
 const Register = () => {
-    const navigate = useNavigate();
-    const USERNAME_REGEX = /^[A-Za-z0-9_]{6,}$/;
-    const PWD_REGEX = /^[A-Za-z0-9_]{8,}$/;
-    const EMAIL_REGEX = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
 
     const [validUsername, setValidUsername] = useState(false);
     const [validEmail, setValidEmail] = useState(false);
@@ -26,16 +22,20 @@ const Register = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const successRef = useRef(success);
     const errMsgRef = useRef(errMsg);
+    const navigate = useNavigate();
 
     useEffect(() => {
+        const USERNAME_REGEX = /^[A-Za-z0-9_]{6,}$/;
         setValidUsername(USERNAME_REGEX.test(username));
     }, [username]);
 
     useEffect(() => {
+        const EMAIL_REGEX = /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/;
         setValidEmail(EMAIL_REGEX.test(email));
     }, [email]);
 
     useEffect(() => {
+        const PWD_REGEX = /^[A-Za-z0-9_]{8,}$/;
         setValidPassword(PWD_REGEX.test(password));
         setValidPassword2(!isEmpty(password) && !isEmpty(password2) && password === password2);
 
@@ -61,11 +61,8 @@ const Register = () => {
     }, [errMsg, success]);
 
 
-
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        setIsSubmitting(true);
-
         if (!validUsername) {
             alert('Username must be at least 6 characters.')
             return;
@@ -80,22 +77,22 @@ const Register = () => {
             alert('Passwords do not match.')
             return;
         }
-
         try {
+            setIsSubmitting(true);
             const response = await axios.post('http://localhost:8000/api/register', {
                 email,
                 password,
                 username,
             });
 
-            if (response.status == 200) {
+            if (response.status === 200) {
                 setUsername("");
                 setEmail("");
                 setPassword("");
                 setPassword2("");
                 setErrMsg('');
                 setSuccess(true);
-
+                navigate('/login', { state: { registrationSuccess: true } });
             }
 
         } catch (err: any) {
@@ -113,7 +110,7 @@ const Register = () => {
     }
 
     return (
-        <form id="authForm" className='shadow' onSubmit={handleSubmit}>
+        <form id="authForm" className='shadow mb-3' onSubmit={handleSubmit}>
             {success && <div className='text-success text-center mt-3 fw-bold'>Registration successful.</div>}
             {!isEmpty(errMsg) && <div className='text-danger text-center mt-3 fw-bold'>{errMsg}</div>}
             <h2 id="headerTitle">Register</h2>
@@ -136,12 +133,18 @@ const Register = () => {
                 </div>
                 <div id="button" className="row">
                     <Button variant="contained" color="primary" type='submit' disabled={isSubmitting}>
-                        {isSubmitting ? <CircularProgress size="sm" /> : 'Register'}
+                        {isSubmitting ? <CircularProgress size="sm" color='secondary' /> : 'Register'}
                     </Button>
                 </div>
                 <div className='row pb-4'>
                     Already have an account?
-                    <a role='button' className='text-center' onClick={() => navigate('/login')}>Login</a>
+                    <a href="/login" role='button' className='text-center' onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/login');
+                    }}
+                    >
+                        Login
+                    </a>
                 </div>
             </div>
         </form>

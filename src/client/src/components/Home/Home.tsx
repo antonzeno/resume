@@ -1,7 +1,7 @@
 import React from 'react';
 import { styled } from '@mui/material/styles';
 import Button, { ButtonProps } from '@mui/material/Button';
-import { purple, blue } from '@mui/material/colors';
+import { blue } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
 
 const showcase = require('../../assets/showcase.gif');
@@ -10,11 +10,11 @@ const Home = () => {
     const navigate = useNavigate();
 
     const ColorButton = styled(Button)<ButtonProps>(({ theme }) => ({
-        color: theme.palette.getContrastText(purple[500]),
+        color: theme.palette.getContrastText('#4564DD'),
         padding: 10,
         paddingRight: 25,
         paddingLeft: 25,
-        backgroundColor: blue[500],
+        backgroundColor: '#4564DD',
         '&:hover': {
             backgroundColor: blue[700],
         },

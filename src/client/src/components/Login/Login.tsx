@@ -1,12 +1,21 @@
-import React, { useState } from 'react';
-import { Button } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
+import { Alert, AlertColor, Button, Snackbar } from '@mui/material';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { SnackbarContext } from '../../contexts/SnackbarContext';
 
-const Register = () => {
+const Login = () => {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const location = useLocation();
+    const registrationSuccess = location.state?.registrationSuccess;
+    const { message, severity, isSnackbarOpen, showSnackbar, hideSnackbar } = useContext(SnackbarContext);
+
+    useEffect(() => {
+        if (registrationSuccess) {
+            showSnackbar('Registration success', "success");
+        }
+    }, [registrationSuccess]);
 
     const handleSubmit = () => {
         console.log('submitted');
@@ -32,11 +41,24 @@ const Register = () => {
                 </div>
                 <div className='row pb-4'>
                     Don't have an account?
-                    <a role='button' className='text-center' onClick={() => navigate('/register')}>Register</a>
+                    <a href="/register" role='button' className='text-center' onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/register');
+                    }}
+                    >
+                        Login
+                    </a>
                 </div>
             </div>
+            {isSnackbarOpen && <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={3000}>
+                <Alert onClose={() => hideSnackbar()} severity={severity as AlertColor} sx={{ width: '100%' }}>
+                    {message}
+                </Alert>
+            </Snackbar>}
         </form>
     );
 }
 
-export default Register;
+export default Login;
