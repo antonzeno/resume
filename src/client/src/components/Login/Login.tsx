@@ -46,17 +46,10 @@ const Login = () => {
                         navigate('/register');
                     }}
                     >
-                        Login
+                        Register
                     </a>
                 </div>
             </div>
-            {isSnackbarOpen && <Snackbar
-                open={isSnackbarOpen}
-                autoHideDuration={3000}>
-                <Alert onClose={() => hideSnackbar()} severity={severity as AlertColor} sx={{ width: '100%' }}>
-                    {message}
-                </Alert>
-            </Snackbar>}
         </form>
     );
 }

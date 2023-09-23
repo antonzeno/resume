@@ -1,11 +1,12 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
-import { Button, CircularProgress } from '@mui/material';
+import React, { FormEvent, useContext, useEffect, useRef, useState } from 'react';
+import { Alert, AlertColor, Button, CircularProgress, Snackbar } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import './Register.css';
 import { isEmpty } from 'lodash';
+import { SnackbarContext } from '../../contexts/SnackbarContext';
 
 const Register = () => {
 
@@ -23,6 +24,7 @@ const Register = () => {
     const successRef = useRef(success);
     const errMsgRef = useRef(errMsg);
     const navigate = useNavigate();
+    const { message, severity, isSnackbarOpen, showSnackbar, hideSnackbar } = useContext(SnackbarContext);
 
     useEffect(() => {
         const USERNAME_REGEX = /^[A-Za-z0-9_]{6,}$/;
@@ -64,17 +66,17 @@ const Register = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (!validUsername) {
-            alert('Username must be at least 6 characters.')
+            showSnackbar('Username must be at least 6 characters.', 'warning')
             return;
         }
 
         if (!validPassword) {
-            alert('Passwords must be at least 8 characters.')
+            showSnackbar('Passwords must be at least 8 characters.', 'warning')
             return;
         }
 
         if (!validPassword2) {
-            alert('Passwords do not match.')
+            showSnackbar('Passwords do not match.', 'warning')
             return;
         }
         try {
@@ -97,11 +99,11 @@ const Register = () => {
 
         } catch (err: any) {
             if (!err.response) {
-                setErrMsg("No Server Response");
+                showSnackbar("No Server Response", "warning");
             } else if (err.response?.status === 409) {
-                setErrMsg("User is already registered");
+                showSnackbar("User is already registered", "warning");
             } else {
-                setErrMsg("Registration Failed");
+                showSnackbar("Registration Failed", "warning");
             }
             setSuccess(false);
         } finally {

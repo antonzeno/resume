@@ -1,3 +1,4 @@
+import { Alert, AlertColor, Snackbar } from '@mui/material';
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface SnackbarContextProps {
@@ -38,6 +39,19 @@ export const SnackbarProvider: React.FC<{ children: ReactNode }> = ({ children }
     return (
         <SnackbarContext.Provider value={{ showSnackbar, hideSnackbar, isSnackbarOpen, message, severity }}>
             {children}
+            <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={3000}
+                onClose={hideSnackbar}
+            >
+                <Alert
+                    onClose={hideSnackbar}
+                    severity={severity as AlertColor}
+                    sx={{ width: '100%' }}
+                >
+                    {message}
+                </Alert>
+            </Snackbar>
         </SnackbarContext.Provider>
     );
 };
