@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -10,18 +10,31 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { UserContext } from '../../contexts/UserContext';
+import { SnackbarContext } from '../../contexts/SnackbarContext';
 
 const logo = require('../../assets/logo.webp');
 const rocket = require('../../assets/rocket.png');
 
 function Navigation() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const pages = ['Products', 'Pricing', 'Blog'];
+    const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
+    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const { isAuthenticated, logout, username } = useContext(UserContext);
     const nav = useNavigate();
-    const pages = ['Products', 'Pricing', 'Blog'];
+    const location = useLocation();
+
+    const loginSuccessful = location.state?.loginSuccessful;
+    const { showSnackbar } = useContext(SnackbarContext);
+
+    useEffect(() => {
+        if (loginSuccessful) {
+            showSnackbar('Login successful', "success");
+            handleCloseUserMenu()
+        }
+    }, [loginSuccessful]);
+
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -41,6 +54,8 @@ function Navigation() {
     function navigate(route: string) {
         nav(`/${route.toLowerCase()}`);
     }
+
+    console.log(anchorElUser)
 
 
     return (
@@ -63,8 +78,8 @@ function Navigation() {
                             textDecoration: 'none',
                         }}
                     >
-                        <img alt="Logo" src={logo} height={50} />
                         <img alt="rocket" src={rocket} height={50} />
+                        <div style={{ color: 'black' }}>.DOC</div>
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -120,7 +135,7 @@ function Navigation() {
                             textDecoration: 'none',
                         }}
                     >
-                        <img alt="Logo" src={logo} height={50} />
+                        <div style={{ color: 'black' }}>Doku</div>
                         <img alt="rocket" src={rocket} height={50} />
 
                     </Typography>
@@ -137,7 +152,7 @@ function Navigation() {
                     </Box>
 
                     {isAuthenticated ? <Box sx={{ flexGrow: 0 }}>
-                        <Tooltip title="Profile">
+                        <Tooltip title={username}>
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                                 <Avatar alt={username} src="/static/images/avatar/2.jpg" />
                             </IconButton>

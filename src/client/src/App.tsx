@@ -9,6 +9,7 @@ import Footer from './components/Footer/Footer';
 import Products from './components/Products/Products';
 import Register from './components/Register/Register';
 import Login from './components/Login/Login';
+import ProductDetail from './components/ProductDetail/ProductDetail';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/products/:product" element={<ProductDetail />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/*" element={<NoMatch />} />

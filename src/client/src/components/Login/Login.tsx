@@ -10,17 +10,24 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
-
     const location = useLocation();
     const registrationSuccess = location.state?.registrationSuccess;
+    const product = location.state?.product;
     const { showSnackbar } = useContext(SnackbarContext);
-    const { login } = useContext(UserContext);
+    const { isAuthenticated, login } = useContext(UserContext);
 
     useEffect(() => {
         if (registrationSuccess) {
             showSnackbar('Registration success', "success");
         }
     }, [registrationSuccess]);
+
+    useEffect(() => {
+        if (product != null && isAuthenticated) {
+            navigate(`/products/${product}`)
+        }
+    }, [product]);
+
 
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
@@ -38,7 +45,11 @@ const Login = () => {
                 const formattedExpiryDate = expiryDate.toUTCString();
                 document.cookie = `token=${response.data.token}; path=/; expires=${formattedExpiryDate}; Secure; SameSite=None`;
                 login();
-                navigate('/');
+                if (product != null) {
+                    navigate(`/products/${product}`)
+                } else {
+                    navigate('/', { state: { loginSuccessful: true } });
+                }
             }
 
         } catch (err: any) {

@@ -20,7 +20,7 @@ const Products = () => {
                 <div className="row">
                     {
                         products.map(product =>
-                            <ProductCard title={product} img={product} page={product} available={product == 'Certificate'} />
+                            <ProductCard title={product} img={product} available={product == 'Certificate'} />
                         )
                     }
                 </div>
