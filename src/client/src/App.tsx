@@ -15,19 +15,22 @@ import ProductDetail from './components/ProductDetail/ProductDetail';
 function App() {
   return (
     <>
-      <Navigation />
-      <div className='app'>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/:product" element={<ProductDetail />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/*" element={<NoMatch />} />
-        </Routes>
-
+      <div className="app">
+        <div className="content">
+          <Navigation />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/products/:product" element={<ProductDetail />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/*" element={<NoMatch />} />
+          </Routes>
+        </div>
+        <div className="footer">
+          <Footer />
+        </div>
       </div>
-      <Footer />
     </>
   );
 }

@@ -55,11 +55,8 @@ function Navigation() {
         nav(`/${route.toLowerCase()}`);
     }
 
-    console.log(anchorElUser)
-
-
     return (
-        <AppBar position="static" elevation={0} sx={{ backgroundColor: 'white' }}>
+        <AppBar position="fixed" elevation={0} sx={{ backgroundColor: 'white' }}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     {/* <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} /> */}

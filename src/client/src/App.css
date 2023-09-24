@@ -5,7 +5,18 @@ body {
 }
 
 .app {
-  min-height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
+  margin-top: 55px;
+}
+
+.footer {
+  margin-top: auto;
 }
 
 .center-container {

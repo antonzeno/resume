@@ -1,9 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductCard from './ProductCard';
+import axios from 'axios';
 
-const products = ['Certificate', 'Cover', 'Invoice', 'Resume'];
+interface Product {
+    id: string;
+    name: string;
+    image_uri: string;
+}
 
 const Products = () => {
+    const [products, setProducts] = useState<Product[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const docuApiKey = process.env.REACT_APP_DOCU_API_KEY;
+            console.log(docuApiKey)
+
+            try {
+                const response = await axios.get('http://localhost:8000/api/template', {
+                    headers: {
+                        Authorization: docuApiKey,
+                    },
+                });
+                setProducts(response.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
+
+        fetchData();
+    }, [])
+
     return (
         <div className='text-center'>
             <div className="app-header center-container text-center">
@@ -20,7 +47,7 @@ const Products = () => {
                 <div className="row">
                     {
                         products.map(product =>
-                            <ProductCard title={product} img={product} available={product == 'Certificate'} />
+                            <ProductCard name={product.name} img={product.image_uri} available={true} />
                         )
                     }
                 </div>
