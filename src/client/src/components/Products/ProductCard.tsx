@@ -3,14 +3,15 @@ import './Products.css';
 import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
+    id: string;
     name: string;
     img: string;
     available: boolean;
 }
-function ProductCard({ name, img, available }: ProductCardProps) {
+function ProductCard({ id, name, img, available }: ProductCardProps) {
     return (
         <div className="col-6 d-flex flex-column">
-            <Link to={available ? `/products/${name.toLowerCase()}` : '/products'} style={{ textDecoration: 'none' }}>
+            <Link to={available ? `/products/${id}` : '/products'} style={{ textDecoration: 'none' }}>
                 <h6>{name}</h6>
                 <div className='d-flex flex-column position-relative p-1'>
                     {!available && <div className="coming-soon">Coming Soon</div>}

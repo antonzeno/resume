@@ -14,7 +14,6 @@ const Products = () => {
     useEffect(() => {
         const fetchData = async () => {
             const docuApiKey = process.env.REACT_APP_DOCU_API_KEY;
-            console.log(docuApiKey)
 
             try {
                 const response = await axios.get('http://localhost:8000/api/template', {
@@ -47,7 +46,7 @@ const Products = () => {
                 <div className="row">
                     {
                         products.map(product =>
-                            <ProductCard name={product.name} img={product.image_uri} available={true} />
+                            <ProductCard id={product.id} name={product.name} img={product.image_uri} available={true} />
                         )
                     }
                 </div>

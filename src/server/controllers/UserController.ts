@@ -40,7 +40,6 @@ class UserController {
 
 
     static async register(req: express.Request, res: express.Response) {
-        console.log(req.body);
         try {
             const { username, email, password } = req.body;
 
