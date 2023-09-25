@@ -10,7 +10,7 @@ interface ProductCardProps {
 }
 function ProductCard({ id, name, img, available }: ProductCardProps) {
     return (
-        <div className="col-6 d-flex flex-column">
+        <div className="col-6 col-md-4 d-flex flex-column">
             <Link to={available ? `/products/${id}` : '/products'} style={{ textDecoration: 'none' }}>
                 <h6>{name}</h6>
                 <div className='d-flex flex-column position-relative p-1'>

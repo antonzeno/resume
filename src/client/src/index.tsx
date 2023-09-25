@@ -9,13 +9,11 @@ import { UserProvider } from './contexts/UserContext';
 const rootElement = document.getElementById('root');
 const root = ReactDOM.createRoot(rootElement || document.createElement('div'));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <SnackbarProvider>
-        <UserProvider>
-          <App />
-        </UserProvider>
-      </SnackbarProvider>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <SnackbarProvider>
+      <UserProvider>
+        <App />
+      </UserProvider>
+    </SnackbarProvider>
+  </BrowserRouter>
 );

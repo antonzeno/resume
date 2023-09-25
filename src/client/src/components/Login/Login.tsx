@@ -64,7 +64,7 @@ const Login = () => {
     }
 
     return (
-        <form id="authForm" className='shadow' onSubmit={handleSubmit}>
+        <form id="docForm" className='shadow' onSubmit={handleSubmit}>
             <h2 id="headerTitle">Login</h2>
             <div>
                 <div className="row">

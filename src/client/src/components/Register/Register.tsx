@@ -1,5 +1,5 @@
 import React, { FormEvent, useContext, useEffect, useRef, useState } from 'react';
-import { Button, CircularProgress, Snackbar } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -85,7 +85,7 @@ const Register = () => {
     }
 
     return (
-        <form id="authForm" className='shadow mb-3' onSubmit={handleSubmit}>
+        <form id="docForm" className='shadow mb-3' onSubmit={handleSubmit}>
             <h2 id="headerTitle">Register</h2>
             <div>
                 <div className="row">
