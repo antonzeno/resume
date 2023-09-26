@@ -4,7 +4,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDownload } from '@fortawesome/free-solid-svg-icons';
 import { UserContext } from '../../contexts/UserContext';
-import './ProductDetail.css'
+import { SnackbarContext } from '../../contexts/SnackbarContext';
 
 interface Product {
     id: string;
@@ -20,6 +20,7 @@ const ProductDetail = () => {
     const { id } = useParams();
     const [template, setTemplate] = useState<Product | null>(null);
     const [tagValues, setTagValues] = useState<{ [key: string]: string }>({});
+    const { showSnackbar } = useContext(SnackbarContext);
 
     const navigate = useNavigate();
 
@@ -56,13 +57,35 @@ const ProductDetail = () => {
         }));
     }
 
+    const handleDownload = async () => {
+        try {
+            const docuApiKey = process.env.REACT_APP_DOCU_API_KEY;
+            const response = await axios.post(`http://localhost:8000/api/document`, {
+                template_id: id,
+                data: [tagValues]
+            }, {
+                headers: {
+                    Authorization: docuApiKey
+                }
+            });
+
+            if (response.status === 200) {
+                showSnackbar('Download success', 'success');
+            }
+
+        } catch (error) {
+            console.error('Error downloading document:', error);
+        }
+    }
+
+
     if (!isAuthenticated) {
         return null;
     }
 
     return (<div className='container mt-5'>
         <div className="row py-0 py-lg-5">
-            <div className="col-12 col-md-6 order-2 order-md-1 me-5"><img src={template?.image_uri} alt="" style={{ width: '100%' }} /></div>
+            <div className="col-12 col-md-6 order-2 order-md-1 me-5"><img src={template?.image_uri} alt={template?.name} className='w-100 shadow' /></div>
             <div className="col-12 col-md-5 order-1 order-md-2">
                 <h1>{template?.name}</h1>
                 <p className='text-muted'>
@@ -86,7 +109,7 @@ const ProductDetail = () => {
                         </div>
                     ))}
                     <div className='d-flex justify-content-center my-5'>
-                        <button className='btn btn-primary p-2 px-4'>Download <FontAwesomeIcon icon={faDownload} /> </button>
+                        <button className='btn btn-primary p-2 px-4' onClick={handleDownload}>Download <FontAwesomeIcon icon={faDownload} /> </button>
 
                     </div>
                 </div>

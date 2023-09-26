@@ -31,8 +31,8 @@ const Products = () => {
     }, [])
 
     return (
-        <div className='text-center'>
-            <div className="app-header center-container text-center">
+        <div>
+            <div className="app-header center-container">
                 <div className="container">
                     <div className="small fw-bold">Explore Our Products</div>
                     <h1 className='fw-bold'>Elevate Your Document Creation</h1>

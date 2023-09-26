@@ -10,7 +10,7 @@ export default (): express.Router => {
     router.post('/api/login', UserController.login);
     router.get('/api/template', verifyApiToken, DownloadController.getTemplates);
     router.get('/api/template/:id', verifyApiToken, DownloadController.getTemplate);
-    router.post('/api/download', verifyApiToken, DownloadController.download);
+    router.post('/api/document', verifyApiToken, DownloadController.document);
 
     return router;
 }

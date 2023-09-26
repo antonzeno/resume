@@ -18,7 +18,7 @@ const logo = require('../../assets/logo.webp');
 const rocket = require('../../assets/rocket.png');
 
 function Navigation() {
-    const pages = ['Products', 'Pricing', 'Blog'];
+    const pages = ['Products', 'Pricing', 'Timeline'];
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
     const { isAuthenticated, logout, username } = useContext(UserContext);
